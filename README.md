@@ -1,21 +1,21 @@
-#define a new bridge network
+# define a new bridge network
 docker network create redapp
 
-#spin redis container in the network created
+# spin redis container in the network created
 docker run --name my-redis-container --network redapp -d redis
 
-#build application image
+# build application image
 cd <location of dockerfile>
 docker build -t myimage .
 
-#spin application container, make sure port 80 is available in host machiene
+# spin application container, make sure port 80 is available in host machiene
 docker run -d --name mycontainer --network redapp -p 80:80 myimage
 
-#attach application container to default bridge network for connectivity
+# attach application container to default bridge network for connectivity
 docker network connect bridge mycontainer
 
 
-#output of network inspect should look like below with two containers attached to it.
+# output of network inspect should look like below with two containers attached to it.
 docker network inspect redapp 
 [
     {
